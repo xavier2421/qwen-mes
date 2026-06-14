@@ -10,6 +10,7 @@
 │   ├── pom.xml             # 父工程 POM
 │   ├── user-service/       # 用户与权限中心
 │   ├── sales-service/      # 销售与订单管理
+│   ├── inventory-service/  # 库存管理服务
 │   ├── production-service/ # 生产进度管理
 │   ├── warehouse-service/  # 智能仓储管理
 │   ├── delivery-service/   # 发货与客户分享
@@ -72,14 +73,15 @@ mvn spring-boot:run
 |------|--------|------|--------|
 | 用户与权限中心 | user-service | 8081 | P0 |
 | 销售与订单管理 | sales-service | 8082 | P0 |
-| 生产进度管理 | production-service | 8083 | P0 |
-| 智能仓储管理 | warehouse-service | 8084 | P0 |
-| 发货与客户分享 | delivery-service | 8085 | P1 |
-| 财务管理 | finance-service | 8086 | P1 |
-| BI 报表中心 | bi-service | 8087 | P1 |
-| 发票管理 | invoice-service | 8088 | P2 |
-| 物流费用管理 | logistics-service | 8089 | P2 |
-| 外协管理 | subcontract-service | 8090 | P2 |
+| 库存管理服务 | inventory-service | 8083 | P0 |
+| 生产进度管理 | production-service | 8084 | P0 |
+| 智能仓储管理 | warehouse-service | 8085 | P0 |
+| 发货与客户分享 | delivery-service | 8086 | P1 |
+| 财务管理 | finance-service | 8087 | P1 |
+| BI 报表中心 | bi-service | 8088 | P1 |
+| 发票管理 | invoice-service | 8089 | P2 |
+| 物流费用管理 | logistics-service | 8090 | P2 |
+| 外协管理 | subcontract-service | 8091 | P2 |
 
 ## API 接口
 
@@ -94,6 +96,28 @@ mvn spring-boot:run
 - `POST /api/v1/auth/login` - 登录
 - `POST /api/v1/auth/logout` - 登出
 - `POST /api/v1/auth/refresh` - 刷新 Token
+
+### 产品管理
+- `POST /api/products` - 创建产品
+- `GET /api/products` - 产品列表（分页）
+- `GET /api/products/{id}` - 获取产品详情
+- `PUT /api/products/{id}` - 更新产品
+- `DELETE /api/products/{id}` - 删除产品
+- `GET /api/products/search?keyword=xxx` - 搜索产品
+- `GET /api/products/category/{category}` - 按分类查询
+- `GET /api/products/low-stock` - 查询低库存产品
+- `POST /api/products/{id}/adjust-stock?quantity=xxx` - 调整库存
+- `POST /api/products/{id}/toggle-status` - 启用/禁用产品
+
+### 库存流水
+- `POST /api/inventory/transactions` - 创建交易记录
+- `GET /api/inventory/transactions` - 交易记录列表（分页）
+- `GET /api/inventory/transactions/{id}` - 获取交易记录详情
+- `GET /api/inventory/transactions/product/{productId}` - 查询产品交易记录
+- `GET /api/inventory/transactions/time-range?startTime=xxx&endTime=xxx` - 按时间范围查询
+- `POST /api/inventory/transactions/inbound` - 入库操作
+- `POST /api/inventory/transactions/outbound` - 出库操作
+- `POST /api/inventory/transactions/adjust` - 库存调整
 
 ## 开发文档
 
